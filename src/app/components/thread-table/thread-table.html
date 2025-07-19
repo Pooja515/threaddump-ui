@@ -1,0 +1,50 @@
+<div class="thread-table-container">
+  <table>
+    <thead>
+    <tr>
+      <th>Thread Name</th>
+      <th>Thread ID</th>
+      <th>State</th>
+      <th>Deadlocked</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let thread of filteredThreads">
+      <!-- Thread Summary Row -->
+      <tr
+        (click)="toggleStack(thread.threadId)"
+        [class.active-thread]="expandedThreadId === thread.threadId"
+        class="clickable-row"
+      >
+        <td>{{ thread.threadName }}</td>
+        <td>{{ thread.threadId }}</td>
+        <td>{{ thread.state }}</td>
+        <td>{{ thread.deadlocked ? 'Yes' : 'No' }}</td>
+      </tr>
+
+      <!-- Stacktrace Row -->
+      <tr *ngIf="expandedThreadId === thread.threadId" class="stacktrace-row">
+        <td colspan="4">
+          <div class="stacktrace-container">
+            <div class="stacktrace-header">
+                <span
+                  class="arrow"
+                  [style.transform]="expandedThreadId === thread.threadId ? 'rotate(90deg)' : 'rotate(0deg)'"
+                >▶</span>
+              <strong>Stacktrace for:</strong> {{ thread.threadName }}
+            </div>
+            <pre class="stack-block">
+{{ thread.stackTrace?.join('\n') || 'No stacktrace available.' }}
+              </pre>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+
+    <!-- No threads fallback -->
+    <tr *ngIf="filteredThreads.length === 0">
+      <td colspan="4" class="no-data-msg">No threads found for selected state.</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

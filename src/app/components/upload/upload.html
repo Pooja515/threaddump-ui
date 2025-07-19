@@ -1,0 +1,54 @@
+<div class="upload-container">
+
+  <h1 class="page-title">Threaddump Analyser</h1>
+
+  <div class="upload-actions">
+    <input type="file" (change)="onFileSelected($event)">
+    <button (click)="onUpload()">Analyse</button>
+    <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+  </div>
+
+
+  <div *ngIf="javaProcesses.length > 0" class="upload-actions">
+    <select [(ngModel)]="selectedPid">
+      <option value="" disabled selected>Select a Java Process</option>
+      <option *ngFor="let proc of javaProcesses" [value]="proc.split(' ')[0]">
+        {{ proc }}
+      </option>
+    </select>
+    <button (click)="captureLiveDump()">Capture Live Dump</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-msg">
+    Analyzing thread dump...
+  </div>
+
+  <div *ngIf="response && !isLoading" class="analysis-results">
+
+    <div class="summary-grid">
+      <div class="stats-wrapper">
+        <app-stats
+          [totalThreads]="response.totalThreads"
+          [running]="getCount('RUNNABLE')"
+          [blocked]="getCount('BLOCKED')"
+          [waiting]="getCount('WAITING')"
+          [timedWaiting]="getCount('TIMED_WAITING')"
+          [deadlocked]="getDeadlockCount()"
+          [selected]="selectedState"
+          (stateSelected)="onStateSelected($event)">
+        </app-stats>
+      </div>
+
+      <app-chart [data]="getThreadCountsByState()"></app-chart>
+    </div>
+
+    <hr class="section-divider" />
+
+    <app-thread-table
+      [threads]="response.threads"
+      [selectedState]="selectedState">
+    </app-thread-table>
+
+  </div>
+</div>
+

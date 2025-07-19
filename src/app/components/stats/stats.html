@@ -1,0 +1,44 @@
+<div class="stats-container">
+  <div class="stat-card"
+       [class.selected]="selected === 'ALL'"
+       (click)="selectState('ALL')">
+    <h3>Total</h3>
+    <p>{{ totalThreads }}</p>
+  </div>
+
+  <div class="stat-card"
+       [class.selected]="selected === 'RUNNABLE'"
+       (click)="selectState('RUNNABLE')">
+    <h3>Running</h3>
+    <p>{{ running }}</p>
+  </div>
+
+  <div class="stat-card"
+       [class.selected]="selected === 'BLOCKED'"
+       (click)="selectState('BLOCKED')">
+    <h3>Blocked</h3>
+    <p>{{ blocked }}</p>
+  </div>
+
+  <div class="stat-card"
+       [class.selected]="selected === 'WAITING'"
+       (click)="selectState('WAITING')">
+    <h3>Waiting</h3>
+    <p>{{ waiting }}</p>
+  </div>
+
+  <div class="stat-card"
+       [class.selected]="selected === 'TIMED_WAITING'"
+       (click)="selectState('TIMED_WAITING')">
+    <h3>Timed Waiting</h3>
+    <p>{{ timedWaiting }}</p>
+  </div>
+
+  <div class="stat-card"
+       [class.selected]="selected === 'DEADLOCKED'"
+       (click)="selectState('DEADLOCKED')">
+    <h3>Deadlocked</h3>
+    <p>{{ deadlocked }}</p>
+  </div>
+</div>
+

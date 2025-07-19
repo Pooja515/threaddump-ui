@@ -1,0 +1,89 @@
+thread-table-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+thead {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-row:hover {
+  background-color: #f0f8ff;
+}
+
+.active-thread {
+  background-color: #e9f2ff;
+  border-left: 3px solid #007bff;
+}
+
+.stacktrace-row {
+  background-color: #fdfdfd;
+}
+
+.stacktrace-container {
+  margin: 12px 0;
+  padding: 12px;
+  border-left: 4px solid #007bff;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.stacktrace-header {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #004085;
+  display: flex;
+  align-items: center;
+}
+
+.stacktrace-header .arrow {
+  margin-right: 6px;
+  color: #007bff;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+
+
+.stack-block {
+  font-family: Consolas, monospace;
+  font-size: 13px;
+  background-color: #f5f5f5;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.no-data-msg {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  font-style: italic;
+}
+

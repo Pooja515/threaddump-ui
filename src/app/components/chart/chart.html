@@ -1,0 +1,7 @@
+<div class="chart-container" *ngIf="pieChartData.datasets[0].data.length">
+  <canvas baseChart
+          [data]="pieChartData"
+          [type]="'pie'"
+          [options]="pieChartOptions">
+  </canvas>
+</div>
