@@ -26,9 +26,14 @@ response: any;
 selectedState: string = 'ALL';
 isLoading: boolean = false;
 
-// live capture
 javaProcesses: string[] = [];
 selectedPid: string = '';
+
+  remoteHost = '';
+  remotePort = '22';
+  remotePid = '';
+  remoteUser = '';
+  remotePassword = '';
 
 constructor(private http: HttpClient) {}
 
@@ -73,17 +78,16 @@ constructor(private http: HttpClient) {}
 
   captureLiveDump(): void {
     if (!this.selectedPid) return;
-  
+
     this.isLoading = true;
-  
+
     this.http.post<any>(`http://localhost:8080/api/thread-dump/capture-dump/${this.selectedPid}`, {}, {})
       .subscribe({
         next: (res) => {
           this.response = res;
           this.isLoading = false;
           console.log('Live Capture Result:', res);
-  
-          // Trigger download of the .txt file
+
           if (res.downloadUrl) {
             const downloadLink = `http://localhost:8080${res.downloadUrl}`;
             window.open(downloadLink, '_blank');
@@ -96,7 +100,37 @@ constructor(private http: HttpClient) {}
         }
       });
   }
-  
+
+  captureRemoteDump(): void {
+    if (!this.remoteHost || !this.remotePort || !this.remotePid || !this.remoteUser || !this.remotePassword) {
+      alert('Please fill all remote server details.');
+      return;
+    }
+
+    const payload = {
+      host: this.remoteHost,
+      port: this.remotePort,
+      pid: this.remotePid,
+      username: this.remoteUser,
+      password: this.remotePassword
+    };
+
+    this.isLoading = true;
+
+    this.http.post<any>('http://localhost:8080/api/thread-dump/remote-capture', payload)
+      .subscribe({
+        next: (res) => {
+          this.response = res;
+          this.isLoading = false;
+          console.log('Remote Capture Result:', res);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error('Remote Capture Error:', err);
+          alert('Failed to capture remote thread dump. Reason: ' + (err?.error?.error || 'Unknown'));
+        }
+      });
+  }
 
   getCount(state: string): number {
     if (!this.response?.threads) return 0;
@@ -129,4 +163,3 @@ constructor(private http: HttpClient) {}
     this.selectedState = state;
   }
 }
-

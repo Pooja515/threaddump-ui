@@ -19,6 +19,15 @@
     <button (click)="captureLiveDump()">Capture Live Dump</button>
   </div>
 
+  <div class="upload-actions">
+    <input type="text" [(ngModel)]="remoteHost" placeholder="Remote Host/IP">
+    <input type="text" [(ngModel)]="remotePort" placeholder="Port (default: 22)">
+    <input type="text" [(ngModel)]="remotePid" placeholder="Remote PID">
+    <input type="text" [(ngModel)]="remoteUser" placeholder="Username">
+    <input type="password" [(ngModel)]="remotePassword" placeholder="Password">
+    <button (click)="captureRemoteDump()">Capture Remote Dump</button>
+  </div>
+
   <div *ngIf="isLoading" class="loading-msg">
     Analyzing thread dump...
   </div>
@@ -51,4 +60,3 @@
 
   </div>
 </div>
-
